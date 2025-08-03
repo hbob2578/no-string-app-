@@ -1,0 +1,17 @@
+{
+  "name": "no-string-app-",
+  "version": "1.0.0",
+  "description": "Speakeasy-themed web application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["speakeasy", "prohibition", "web-app"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
