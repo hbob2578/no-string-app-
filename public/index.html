@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Whispered Word - Speakeasy</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">The Whispered Word</h1>
+            <p class="subtitle">Est. 1923 • A Gentleman's Establishment</p>
+        </header>
+
+        <main class="main-content">
+            <div class="welcome-section">
+                <h2>Welcome to Our Establishment</h2>
+                <p>In these trying times of prohibition, discerning individuals seek quality refreshment and refined company.</p>
+                <p>You've found the right place.</p>
+            </div>
+
+            <div class="password-section">
+                <h3>Members Only</h3>
+                <p>Know the password? Enter below:</p>
+                <div class="password-form">
+                    <input type="password" id="passwordInput" placeholder="Speak easy, friend...">
+                    <button onclick="checkPassword()" class="enter-btn">Enter</button>
+                </div>
+                <div id="message" class="message"></div>
+            </div>
+
+            <div class="atmosphere-section">
+                <h3>Tonight's Entertainment</h3>
+                <ul class="entertainment-list">
+                    <li>🎹 Jazz Piano - Professor Jelly Roll</li>
+                    <li>🎺 Trumpet - Dizzy Dan</li>
+                    <li>🥃 Premium Bootleg Spirits</li>
+                    <li>🃏 High Stakes Card Games</li>
+                </ul>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>"The bee's knees since twenty-three"</p>
+            <p class="warning">⚠️ Keep it on the down-low, capisce?</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
