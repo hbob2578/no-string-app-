@@ -369,6 +369,28 @@ p {
     }
 }
 
+.version {
+    font-size: 0.8rem;
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    margin-top: 10px;
+    opacity: 0.7;
+}
+
+.version-announcement {
+    background: linear-gradient(45deg, var(--gold), var(--light-gold));
+    color: var(--dark-brown);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    border: 2px solid var(--gold);
+}
+
 @media (max-width: 480px) {
     .title {
         font-size: 2rem;
