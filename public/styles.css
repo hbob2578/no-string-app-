@@ -378,3 +378,23 @@ p {
         font-size: 1.2rem;
     }
 }
+
+/* Secret message modal */
+.secret-message-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(212, 175, 55, 0.95);
+    color: #2d1b1b;
+    padding: 30px;
+    border-radius: 15px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+    border: 3px solid #2d1b1b;
+    transition: opacity 1s ease;
+}

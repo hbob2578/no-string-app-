@@ -23,10 +23,10 @@
             <div class="password-section">
                 <h3>Members Only</h3>
                 <p>Know the password? Enter below:</p>
-                <div class="password-form">
-                    <input type="password" id="passwordInput" placeholder="Speak easy, friend...">
-                    <button onclick="checkPassword()" class="enter-btn">Enter</button>
-                </div>
+                <form class="password-form" onsubmit="return checkPassword(event)">
+                    <input type="password" id="passwordInput" placeholder="Speak easy, friend..." required>
+                    <button type="submit" class="enter-btn">Enter</button>
+                </form>
                 <div id="message" class="message"></div>
             </div>
 

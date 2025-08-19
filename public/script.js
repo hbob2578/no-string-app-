@@ -1,59 +1,131 @@
 // Speakeasy JavaScript functionality
 
-// Password for the secret room (keeping it simple for demo)
+// Constants for timing and configuration
+const TIMING = {
+    TITLE_ANIMATION_DELAY: 500,
+    SECTION_ANIMATION_DELAY: 800,
+    SECTION_ANIMATION_STAGGER: 200,
+    PASSWORD_SUCCESS_DELAY: 1500,
+    PASSWORD_ERROR_CLEAR_DELAY: 3000,
+    SECRET_MESSAGE_DISPLAY_TIME: 4000,
+    SECRET_MESSAGE_FADE_TIME: 1000
+};
+
+// Password configuration
 const SECRET_PASSWORD = "bee's knees";
 const ALTERNATIVE_PASSWORDS = ["bees knees", "beesknees", "bootlegger", "giggle water"];
 
-function checkPassword() {
+// Konami code configuration
+const KONAMI_SEQUENCE = [
+    'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+    'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
+    'KeyB', 'KeyA'
+];
+
+// Application state
+const AppState = {
+    konamiCode: [],
+    secretMessageVisible: false
+};
+
+function checkPassword(event) {
+    if (event) {
+        event.preventDefault(); // Prevent form submission
+    }
+    
     const input = document.getElementById('passwordInput');
     const message = document.getElementById('message');
+    
+    // Error handling for missing elements
+    if (!input || !message) {
+        console.error('Required DOM elements not found');
+        return false;
+    }
+    
     const password = input.value.toLowerCase().trim();
     
+    // Input validation
+    if (!password) {
+        displayMessage(message, "Please enter a password.", "error");
+        return false;
+    }
+    
     if (password === SECRET_PASSWORD || ALTERNATIVE_PASSWORDS.includes(password)) {
-        message.textContent = "Welcome to the inner circle! Redirecting...";
-        message.className = "message success";
+        displayMessage(message, "Welcome to the inner circle! Redirecting...", "success");
         
         // Add a slight delay for effect
         setTimeout(() => {
             window.location.href = '/secret';
-        }, 1500);
+        }, TIMING.PASSWORD_SUCCESS_DELAY);
     } else {
-        message.textContent = "Sorry, pal. That ain't the right password. Try again!";
-        message.className = "message error";
+        displayMessage(message, "Sorry, pal. That ain't the right password. Try again!", "error");
         
-        // Clear the message after 3 seconds
+        // Clear the message after delay
         setTimeout(() => {
-            message.className = "message";
-            message.textContent = "";
-        }, 3000);
+            clearMessage(message);
+        }, TIMING.PASSWORD_ERROR_CLEAR_DELAY);
         
         // Clear the input
         input.value = "";
         input.focus();
     }
+    
+    return false; // Prevent form submission
+}
+
+function displayMessage(messageElement, text, type) {
+    messageElement.textContent = text;
+    messageElement.className = `message ${type}`;
+}
+
+function clearMessage(messageElement) {
+    messageElement.className = "message";
+    messageElement.textContent = "";
 }
 
 function goBack() {
     window.location.href = '/';
 }
 
-// Allow Enter key to submit password
-document.addEventListener('DOMContentLoaded', function() {
-    const passwordInput = document.getElementById('passwordInput');
-    if (passwordInput) {
-        passwordInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkPassword();
-            }
-        });
-        
-        // Focus on the password input when the page loads
-        passwordInput.focus();
+function showSecretMessage() {
+    // Prevent multiple simultaneous secret messages
+    if (AppState.secretMessageVisible) {
+        return;
     }
-});
+    
+    AppState.secretMessageVisible = true;
+    
+    const message = document.createElement('div');
+    message.className = 'secret-message-modal';
+    message.innerHTML = '🥃<br>You found the secret!<br>The password is "bee\'s knees"<br>🥃';
+    
+    document.body.appendChild(message);
+    
+    setTimeout(() => {
+        message.style.opacity = '0';
+        setTimeout(() => {
+            if (document.body.contains(message)) {
+                document.body.removeChild(message);
+            }
+            AppState.secretMessageVisible = false;
+        }, TIMING.SECRET_MESSAGE_FADE_TIME);
+    }, TIMING.SECRET_MESSAGE_DISPLAY_TIME);
+}
 
-// Add some atmospheric effects
-document.addEventListener('DOMContentLoaded', function() {
+function handleKonamiCode(event) {
+    AppState.konamiCode.push(event.code);
+    
+    if (AppState.konamiCode.length > KONAMI_SEQUENCE.length) {
+        AppState.konamiCode.shift();
+    }
+    
+    if (JSON.stringify(AppState.konamiCode) === JSON.stringify(KONAMI_SEQUENCE)) {
+        showSecretMessage();
+        AppState.konamiCode = [];
+    }
+}
+
+function setupAnimations() {
     // Add subtle animation to title
     const title = document.querySelector('.title');
     if (title) {
@@ -64,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title.style.transition = 'all 1s ease';
             title.style.opacity = '1';
             title.style.transform = 'translateY(0)';
-        }, 500);
+        }, TIMING.TITLE_ANIMATION_DELAY);
     }
     
     // Add staggered animation to main content sections
@@ -77,59 +149,24 @@ document.addEventListener('DOMContentLoaded', function() {
             section.style.transition = 'all 0.8s ease';
             section.style.opacity = '1';
             section.style.transform = 'translateY(0)';
-        }, 800 + (index * 200));
+        }, TIMING.SECTION_ANIMATION_DELAY + (index * TIMING.SECTION_ANIMATION_STAGGER));
     });
-});
-
-// Add some secret Easter eggs
-let konamiCode = [];
-const konamiSequence = [
-    'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
-    'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
-    'KeyB', 'KeyA'
-];
-
-document.addEventListener('keydown', function(e) {
-    konamiCode.push(e.code);
-    
-    if (konamiCode.length > konamiSequence.length) {
-        konamiCode.shift();
-    }
-    
-    if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
-        showSecretMessage();
-        konamiCode = [];
-    }
-});
-
-function showSecretMessage() {
-    const message = document.createElement('div');
-    message.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(212, 175, 55, 0.95);
-        color: #2d1b1b;
-        padding: 30px;
-        border-radius: 15px;
-        font-family: 'Dancing Script', cursive;
-        font-size: 24px;
-        font-weight: 700;
-        text-align: center;
-        z-index: 1000;
-        box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
-        border: 3px solid #2d1b1b;
-    `;
-    message.innerHTML = '🥃<br>You found the secret!<br>The password is "bee\'s knees"<br>🥃';
-    
-    document.body.appendChild(message);
-    
-    setTimeout(() => {
-        message.style.transition = 'opacity 1s ease';
-        message.style.opacity = '0';
-        setTimeout(() => {
-            document.body.removeChild(message);
-        }, 1000);
-    }, 4000);
 }
+
+function setupPasswordInput() {
+    const passwordInput = document.getElementById('passwordInput');
+    if (passwordInput) {
+        // Remove the keypress listener since we're now using form submission
+        // Focus on the password input when the page loads
+        passwordInput.focus();
+    }
+}
+
+// Consolidated DOMContentLoaded listener
+document.addEventListener('DOMContentLoaded', function() {
+    setupPasswordInput();
+    setupAnimations();
+});
+
+// Konami code listener
+document.addEventListener('keydown', handleKonamiCode);
