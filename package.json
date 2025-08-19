@@ -6,12 +6,21 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "puppeteer": "node puppeteer-test.js",
+    "test:e2e": "npm run puppeteer"
   },
-  "keywords": ["speakeasy", "prohibition", "web-app"],
+  "keywords": [
+    "speakeasy",
+    "prohibition",
+    "web-app"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "puppeteer": "^24.16.2"
   }
 }
