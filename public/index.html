@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Whispered Word - Speakeasy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Cinzel:wght@400;600&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -23,10 +26,10 @@
             <div class="password-section">
                 <h3>Members Only</h3>
                 <p>Know the password? Enter below:</p>
-                <div class="password-form">
-                    <input type="password" id="passwordInput" placeholder="Speak easy, friend...">
-                    <button onclick="checkPassword()" class="enter-btn">Enter</button>
-                </div>
+                <form class="password-form" onsubmit="checkPassword(); return false;">
+                    <input type="password" id="passwordInput" placeholder="Speak easy, friend..." autocomplete="current-password" required>
+                    <button type="submit" class="enter-btn">Enter</button>
+                </form>
                 <div id="message" class="message"></div>
             </div>
 
