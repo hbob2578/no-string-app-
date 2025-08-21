@@ -1,26 +1,30 @@
-import js from '@eslint/js';
+const js = require("@eslint/js");
+const globals = require("globals");
 
-export default [
-    js.configs.recommended,
-    {
-        languageOptions: {
-            ecmaVersion: 2018,
-            sourceType: "script",
-            globals: {
-                "window": "readonly",
-                "document": "readonly",
-                "console": "readonly",
-                "setTimeout": "readonly",
-                "require": "readonly",
-                "module": "readonly",
-                "__dirname": "readonly",
-                "process": "readonly"
-            }
-        },
-        rules: {
-            "indent": ["error", 4],
-            "quotes": ["error", "double"],
-            "semi": ["error", "always"]
-        }
+module.exports = [
+  { 
+    files: ["**/*.{js,mjs,cjs}"], 
+    ...js.configs.recommended,
+    languageOptions: { 
+      globals: { 
+        ...globals.browser, 
+        ...globals.node 
+      } 
+    } 
+  },
+  { files: ["**/*.js"], languageOptions: { sourceType: "commonjs" } },
+  {
+    files: ["public/**/*.js"],
+    rules: {
+      "no-unused-vars": ["error", { "varsIgnorePattern": "checkPassword|goBack|showSecretMessage" }]
     }
+  },
+  {
+    files: ["tests/**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.jest
+      }
+    }
+  }
 ];
