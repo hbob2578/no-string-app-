@@ -1,7 +1,5 @@
 /* 1920s Speakeasy Theme CSS */
 
-@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Cinzel:wght@400;600&family=Dancing+Script:wght@400;700&display=swap');
-
 :root {
     --gold: #d4af37;
     --dark-gold: #b8941f;
@@ -20,7 +18,7 @@
 }
 
 body {
-    font-family: 'Cinzel', serif;
+    font-family: 'Cinzel', 'Times New Roman', 'Georgia', serif;
     background: linear-gradient(135deg, var(--dark-brown) 0%, var(--burgundy) 50%, var(--dark-brown) 100%);
     background-attachment: fixed;
     color: var(--cream);
@@ -72,7 +70,7 @@ body::before {
 }
 
 .title {
-    font-family: 'Bungee Shade', cursive;
+    font-family: 'Bungee Shade', 'Impact', 'Arial Black', cursive;
     font-size: 3.5rem;
     color: var(--gold);
     text-shadow: 
@@ -83,7 +81,7 @@ body::before {
 }
 
 .subtitle {
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Dancing Script', 'Brush Script MT', cursive;
     font-size: 1.8rem;
     color: var(--cream);
     font-weight: 400;
@@ -335,7 +333,7 @@ p {
 }
 
 .secret-motto {
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Dancing Script', 'Brush Script MT', cursive;
     font-size: 1.4rem;
     color: var(--gold);
     font-style: italic;
