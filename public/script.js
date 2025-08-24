@@ -15,7 +15,15 @@ function checkPassword() {
         
         // Add a slight delay for effect
         setTimeout(() => {
-            window.location.href = '/secret';
+            // Check if we're on GitHub Pages or static deployment
+            const isGitHubPages = window.location.hostname.includes('github.io') || 
+                                window.location.hostname === 'localhost' && window.location.port === '8000';
+            
+            if (isGitHubPages) {
+                window.location.href = 'secret.html';
+            } else {
+                window.location.href = '/secret';
+            }
         }, 1500);
     } else {
         message.textContent = "Sorry, pal. That ain't the right password. Try again!";
@@ -34,7 +42,15 @@ function checkPassword() {
 }
 
 function goBack() {
-    window.location.href = '/';
+    // Check if we're on GitHub Pages or static deployment
+    const isGitHubPages = window.location.hostname.includes('github.io') || 
+                        window.location.hostname === 'localhost' && window.location.port === '8000';
+    
+    if (isGitHubPages) {
+        window.location.href = 'index.html';
+    } else {
+        window.location.href = '/';
+    }
 }
 
 // Allow Enter key to submit password
