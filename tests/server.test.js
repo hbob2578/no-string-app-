@@ -6,6 +6,11 @@ const path = require('path');
 const app = express();
 app.use(express.static(path.join(__dirname, '../public')));
 
+// Health check endpoint for Cloud Run
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'healthy', timestamp: new Date().toISOString() });
+});
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
@@ -31,6 +36,16 @@ describe('Speakeasy App', () => {
         
         expect(response.text).toContain('Welcome to the Inner Sanctum');
         expect(response.text).toContain('The Real McCoy');
+    });
+
+    test('GET /health should return health status', async () => {
+        const response = await request(app)
+            .get('/health')
+            .expect(200);
+        
+        expect(response.headers['content-type']).toContain('application/json');
+        expect(response.body.status).toBe('healthy');
+        expect(response.body.timestamp).toBeDefined();
     });
 
     test('Static files should be served', async () => {
